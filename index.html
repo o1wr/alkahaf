@@ -6,82 +6,134 @@
     <title>سورة الكهف كاملة - مشاري العفاسي</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #eef2f7 0%, #e2e8f0 100%);
+            --container-bg: #ffffff;
+            --text-color: #0f172a;
+            --title-color: #0369a1;
+            --bismillah-color: #334155;
+            --border-color: #cbd5e1;
+            --audio-bg: #f8fafc;
+            --ayah-bg: #f0f9ff;
+            --ayah-border: #7dd3fc;
+            --ayah-text: #0284c7;
+            --footer-color: #64748b;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --container-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --title-color: #38bdf8;
+            --bismillah-color: #cbd5e1;
+            --border-color: #334155;
+            --audio-bg: #0f172a;
+            --ayah-bg: #0f172a;
+            --ayah-border: #0284c7;
+            --ayah-text: #38bdf8;
+            --footer-color: #94a3b8;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 50%, #bcccdc 100%);
-            color: #102a43;
+            background: var(--bg-gradient);
+            color: var(--text-color);
             font-family: 'Scheherazade New', 'Amiri Quran', serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .container {
-            width: 92%;
-            max-width: 900px;
-            background: #ffffff;
+            width: 90%;
+            max-width: 880px;
+            background: var(--container-bg);
             margin: 30px auto;
-            padding: 40px 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(16, 42, 67, 0.15);
-            border: 2px solid #9fb3c8;
+            padding: 50px 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: background 0.3s ease, border-color 0.3s ease;
+            position: relative;
         }
 
-        /* مشغل الصوت العلوي */
+        /* زر تبديل الوضع (فاتح / داكن) */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--audio-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.85;
+        }
+
         .audio-player-box {
-            background: #f8fafc;
-            border: 1.5px solid #bae6fd;
-            border-radius: 10px;
-            padding: 15px;
+            background: var(--audio-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 20px;
             text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);
+            margin-bottom: 35px;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: background 0.3s ease;
         }
 
         .audio-player-box p {
-            font-size: 17px;
-            color: #0369a1;
+            font-size: 16px;
+            color: var(--title-color);
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-family: 'Amiri Quran', serif;
         }
 
         audio {
             width: 100%;
-            max-width: 500px;
-            height: 40px;
+            max-width: 480px;
+            height: 38px;
             outline: none;
         }
 
         .header-title {
             text-align: center;
-            font-size: 32px;
+            font-size: 34px;
             font-weight: bold;
-            color: #0b69a3;
+            color: var(--title-color);
             margin-bottom: 10px;
             font-family: 'Amiri Quran', serif;
         }
 
         .bismillah {
             text-align: center;
-            font-size: 34px;
-            margin-bottom: 35px;
-            color: #243b53;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: var(--bismillah-color);
             font-family: 'Amiri Quran', serif;
         }
 
         .quran-text {
-            font-size: 26px;
-            line-height: 2.5;
+            font-size: 27px;
+            line-height: 2.6;
             text-align: justify;
             text-justify: inter-word;
-            color: #0f172a;
+            color: var(--text-color);
             direction: rtl;
         }
 
-        /* تنسيق رقم الآية داخل دائرة متناسقة */
         .ayah-number {
             display: inline-flex;
             align-items: center;
@@ -89,31 +141,35 @@
             min-width: 36px;
             height: 36px;
             padding: 0 4px;
-            margin: 0 5px;
-            background: radial-gradient(circle, #e0f2fe 60%, #bae6fd 100%);
-            border: 1.5px solid #0284c7;
+            margin: 0 6px;
+            background: var(--ayah-bg);
+            border: 1px solid var(--ayah-border);
             border-radius: 50%;
             font-size: 15px;
             font-weight: bold;
-            color: #0369a1;
+            color: var(--ayah-text);
             font-family: 'Amiri Quran', serif;
             vertical-align: middle;
+            transition: background 0.3s ease;
         }
 
         footer {
             text-align: center;
-            margin: 25px 0;
-            font-size: 15px;
-            color: #486581;
+            margin: 30px 0;
+            font-size: 14px;
+            color: var(--footer-color);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- زر التبديل بين الوضع الفاتح والداكن -->
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 الوضع الداكن</button>
+
         <!-- مشغل تلاوة سورة الكهف -->
         <div class="audio-player-box">
-            <p>🎧 استمع إلى تلاوة سورة الكهف بصوت القارئ الشيخ مشاري العفاسي</p>
+            <p>🎧 الاستماع إلى سورة الكهف بصوت الشيخ مشاري العفاسي</p>
             <audio controls>
                 <source src="https://server8.mp3quran.net/afs/018.mp3" type="audio/mp3">
                 متصفحك لا يدعم تشغيل الملفات الصوتية.
@@ -232,7 +288,7 @@
             ذَٰلِكَ جَزَآؤُهُمۡ جَهَنَّمُ بِمَا كَفَرُواْ وَٱتَّخَذُوٓاْ ءَايَٰتِي وَرُسُلِي هُزُوًا <span class="ayah-number">١٠٦</span> 
             إِنَّ ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّٰلِحَٰتِ كَانَتۡ لَهُمۡ جَنَّٰتُ ٱلۡفِرۡدَوۡسِ نُزُلًا <span class="ayah-number">١٠٧</span> 
             خَٰلِدِينَ فِيهَا لَا يَبۡغُونَ عَنۡهَا حِوَلٗا <span class="ayah-number">١٠٨</span> 
-            قُل لَّوۡ كَانَ ٱلۡبَحۡرُ مِدَادٗا لِّكَلِمَٰتِ رَبِّي لَنَفِدَ ٱلۡبَحۡرُ قَبۡلَ أَن تَنفَدَ كَلِمَٰتُ رَبِّي وَلَوۡ جِئۡنَا بِمِثۡلِهِۦ مَدَدٗا <span class="ayah-number">١0٩</span> 
+            قُل لَّوۡ كَانَ ٱلۡبَحۡرُ مِدَادٗا لِّكَلِمَٰتِ رَبِّي لَنَفِدَ ٱلۡبَحۡرُ قَبۡلَ أَن تَنفَدَ كَلِمَٰتُ رَبِّي وَلَوۡ جِئۡنَا بِمِثۡلِهِۦ مَدَدٗا <span class="ayah-number">١٠٩</span> 
             قُلۡ إِنَّمَآ أَنَا۠ بَشَرٞ مِّثۡلُكُمۡ يُوحَىٰٓ إِلَيَّ أَنَّمَآ إِلَٰهُكُمۡ إِلَٰهٞ وَٰحِدٞۖ فَمَن كَانَ يَرۡجُواْ لِقَآءَ رَبِّهِۦ فَلۡيَعۡمَلۡ عَمَلٗا صَٰلِحٗا وَلَا يُشۡرِكۡ بِعِبَادَةِ رَبِّهِۦٓ أَحَدَۢا <span class="ayah-number">١١٠</span>
         </div>
     </div>
@@ -241,5 +297,18 @@
         <p>جعلة الله في ميزان حسناتك وحسنات كل من قرأه</p>
     </footer>
 
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                btn.innerText = '🌙 الوضع الداكن';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerText = '☀️ الوضع الفاتح';
+            }
+        }
+    </script>
 </body>
 </html>
